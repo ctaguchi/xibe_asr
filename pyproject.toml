@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "xibe-asr"
+version = "0.1.0"
+description = "Wav2Vec2.0 ASR model for the Xibe language."
+authors = ["Chihiro Taguchi, Norikazu Kogura"]
+license = "Invite-only"
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+datasets = "^3.2.0"
+transformers = {extras = ["torch"], version = "^4.47.1"}
+jiwer = "^3.0.5"
+unidic-lite = "^1.0.8"
+soundfile = "^0.12.1"
+llvmlite = "0.39.0"
+numpy = "^1.23.0"
+librosa = "^0.10.2.post1"
+wandb = "^0.19.1"
+# huggingface-hub = {extras = ["cli"], version = "^0.27.1"}
+accelerator = "^2024.9.13"
+openai = "^1.61.0"
+python-dotenv = "^1.0.1"
+# see: https://github.com/lucaspar/poetry-torch
+torch = {version = "^2.5.1", markers = "extra=='cpu' and extra!='cuda'"}
+torchaudio = {version = "^2.5.1", markers = "extra=='cpu' and extra!='cuda'"}
+pydub = "^0.25.1"
+pympi-ling = "^1.70.2"
+
+
+[tool.poetry.group.cuda]
+optional = true
+
+[tool.poetry.group.cuda.dependencies]
+torch = {version = "^2.5.1+cu121", source = "pytorch-gpu-src", markers = "extra=='cuda' and extra!='cpu'"}
+torchaudio = {version = "^2.5.1+cu121", source = "pytorch-gpu-src", markers = "extra=='cuda' and extra!='cpu'"}
+
+[tool.poetry.extras]
+cpu = ["torch", "torchaudio"]
+cuda = ["torch", "torchaudio"]
+
+[[tool.poetry.source]]
+name = "pytorch-gpu-src"
+url = "https://download.pytorch.org/whl/cu121"
+priority = "explicit"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
